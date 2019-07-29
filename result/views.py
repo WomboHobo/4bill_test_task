@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from bill_test_proj.mixins import CheckAmountMixIn
+from utils.mixins import CheckAmountMixIn
 
 
 class ResultView(CheckAmountMixIn, APIView):

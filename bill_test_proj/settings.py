@@ -122,7 +122,7 @@ STATIC_URL = '/static/'
 
 AMOUNT_LIMITS_CONFIG = {
     'amount': {
-        1000: timedelta(seconds=5),
+        1000000: timedelta(seconds=5),
         3000: timedelta(minutes=1)
     }
 }

@@ -16,7 +16,7 @@ Including another URLconf
 # from django.contrib import admin
 from django.urls import path
 
-from bill_test_proj.views import ResultView
+from result.views import ResultView
 
 urlpatterns = [
     path('result/<amount>', ResultView.as_view()),

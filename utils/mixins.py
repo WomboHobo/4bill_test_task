@@ -17,11 +17,13 @@ class CheckAmountMixIn:
             for cache_key in amount_sum_keys:
                 amount_sum += int(cache.get(cache_key))
             if (amount_sum + int(amount)) > key:
-                raise AmountReachedException
+                raise AmountReachedException(
+                    f'Violated {key} amounts per {value} restriction'
+                )
 
     def handle_exception(self, exc):
         if isinstance(exc, AmountReachedException):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=str(exc), status=status.HTTP_400_BAD_REQUEST)
 
         return super().handle_exception(self, exc)
 
