@@ -121,8 +121,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AMOUNT_LIMITS_CONFIG = {
-    'amount': {
-        1000000: timedelta(seconds=5),
-        3000: timedelta(minutes=1)
-    }
+    100: timedelta(seconds=5),
+    3000: timedelta(minutes=1)
 }

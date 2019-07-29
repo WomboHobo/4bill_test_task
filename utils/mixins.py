@@ -10,29 +10,26 @@ from utils.exceptions import AmountReachedException
 
 class CheckAmountMixIn:
 
-    def check_amount_sum(self, amount):
-        for key, value in settings.AMOUNT_LIMITS_CONFIG['amount'].items():
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
+        for key, value in settings.AMOUNT_LIMITS_CONFIG.items():
             amount_sum = 0
             amount_sum_keys = cache.keys(f'{value}_amount_*')
             for cache_key in amount_sum_keys:
                 amount_sum += int(cache.get(cache_key))
-            if (amount_sum + int(amount)) > key:
+            if (amount_sum + int(kwargs['amount'])) > key:
                 raise AmountReachedException(
                     f'Violated {key} amounts per {value} restriction'
                 )
 
-    def handle_exception(self, exc):
-        if isinstance(exc, AmountReachedException):
-            return Response(data=str(exc), status=status.HTTP_400_BAD_REQUEST)
-
-        return super().handle_exception(self, exc)
-
-    def add_new_amount(self, request, response, *args, **kwargs):
+    def finalize_response(self, request, response, *args, **kwargs):
+        res = super().finalize_response(request, response, *args, **kwargs)
         if response.status_code == status.HTTP_200_OK:
-            for value in settings.AMOUNT_LIMITS_CONFIG['amount'].values():
+            for value in settings.AMOUNT_LIMITS_CONFIG.values():
                 cache.set(
                     f'{value}_amount_{uuid.uuid4()}',
                     kwargs['amount'],
                     timeout=value.total_seconds()
                 )
+        return res
 

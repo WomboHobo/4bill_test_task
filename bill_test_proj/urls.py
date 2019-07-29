@@ -19,5 +19,5 @@ from django.urls import path
 from result.views import ResultView
 
 urlpatterns = [
-    path('result/<amount>', ResultView.as_view()),
+    path('request/<amount>', ResultView.as_view()),
 ]
