@@ -1,0 +1,4 @@
+
+
+class AmountReachedException(Exception):
+    pass
