@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from bill_test_proj import settings
-from bill_test_proj.exceptions import AmountReachedException
+from utils.exceptions import AmountReachedException
 
 
 class CheckAmountMixIn:
